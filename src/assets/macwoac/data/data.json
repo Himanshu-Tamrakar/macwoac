@@ -1,0 +1,432 @@
+{
+  "parsorObject": {
+    "checkBox": {
+      "clientId": "",
+      "projectId": "",
+      "environment": "",
+      "questionId": "",
+      "questionText": "",
+      "questionIdentifier": "",
+      "questionImage": "",
+      "isMandatory": false,
+      "mandatoryFailErrorMessage": "this question is mandatory",
+      "category": "GENERIC",
+      "tags": "",
+      "optionDetails": {
+        "value": "checkbox",
+        "displayChoice": "VERTICAL1",
+        "randomizeOptions": false,
+        "options": [{
+            "optionId": "1",
+            "optionValue": "",
+            "score": "",
+            "isSelected": false,
+            "isOptionCorrect": false
+          },
+          {
+            "optionId": "2",
+            "optionValue": "",
+            "score": "",
+            "isSelected": false,
+            "isOptionCorrect": false
+          }
+        ]
+      },
+      "answerSecurity": {
+        "encryptionType": "",
+        "key": ""
+      },
+      "answerMasking": {
+        "isAnswerMasking": true,
+        "maskingLogic": ""
+      },
+      "correctAnswer": [],
+      "language": "US-EN",
+      "sequence": "",
+      "defaultVisiblity": true,
+      "questionLogic": [{
+        "expression": "",
+        "answerValue": "",
+        "action": "",
+        "questionid": ""
+      }]
+    },
+    "radio": {
+      "clientId": "",
+      "projectId": "",
+      "environment": "",
+      "questionId": "",
+      "questionText": "",
+      "questionIdentifier": "",
+      "questionImage": "",
+      "isMandatory": false,
+      "mandatoryFailErrorMessage": "this question is mandatory",
+      "category": "GENERIC",
+      "tag": [],
+      "optionDetails": {
+        "value": "radio",
+        "displayChoice": "VERTICAL1",
+        "randomizeOptions": false,
+        "options": [{
+            "optionId": 1,
+            "optionValue": "",
+            "score": "",
+            "isSelected": false,
+            "isOptionCorrect": false
+          },
+          {
+            "optionId": 2,
+            "optionValue": "",
+            "score": "",
+            "isSelected": false,
+            "isOptionCorrect": false
+          }
+        ]
+      },
+      "answerSecurity": {
+        "encryptionType": "",
+        "key": ""
+      },
+      "answerMasking": {
+        "isAnswerMasking": true,
+        "maskingLogic": ""
+      },
+      "correctAnswer": [],
+      "language": "US-EN",
+      "sequence": "",
+      "defaultVisiblity": true,
+      "questionLogic": [{
+        "expression": "",
+        "answerValue": "",
+        "action": "",
+        "questionid": ""
+      }]
+    },
+    "sliderRating": {
+      "clientId": "",
+      "projectId": "",
+      "environment": "",
+      "questionId": "",
+      "questionText": "",
+      "questionIdentifier": "",
+      "questionImage": "",
+      "isMandatory": false,
+      "mandatoryFailErrorMessage": "this question is mandatory",
+      "category": "GENERIC",
+      "tag": [],
+      "optionDetails": {
+        "value": "sliderRating",
+        "format": "NUMBER",
+        "startValue": "0",
+        "endValue": "100",
+        "initialPosition": "50",
+        "stepValue": "2",
+        "label": {
+          "start": "start",
+          "middle": "middle",
+          "end": "last"
+        }
+      },
+      "answerSecurity": {
+        "encryptionType": "",
+        "key": ""
+      },
+      "answerMasking": {
+        "isAnswerMasking": true,
+        "maskingLogic": ""
+      },
+      "correctAnswer": [],
+      "language": "US-EN",
+      "sequence": "",
+      "defaultVisiblity": true,
+      "questionLogic": [{
+        "expression": "",
+        "answerValue": "",
+        "action": "",
+        "questionid": ""
+      }]
+    },
+    "media": {
+      "clientId": "",
+      "projectId": "",
+      "environment": "",
+      "questionId": "",
+      "questionText": "",
+      "questionIdentifier": "",
+      "questionImage": "",
+      "isMandatory": false,
+      "mandatoryFailErrorMessage": "this question is mandatory",
+      "category": "GENERIC",
+      "tag": [],
+      "optionDetails": {
+        "value": "media",
+        "media": {
+          "type": "IMAGE",
+          "urls": [{
+              "value": ""
+            }]
+        }
+      },
+      "answerSecurity": {
+        "encryptionType": "",
+        "key": ""
+      },
+      "answerMasking": {
+        "isAnswerMasking": true,
+        "maskingLogic": ""
+      },
+      "correctAnswer": [],
+      "language": "US-EN",
+      "sequence": "",
+      "defaultVisiblity": true,
+      "questionLogic": [{
+        "expression": "",
+        "answerValue": "",
+        "action": "",
+        "questionid": ""
+      }]
+    },
+    "textarea": {
+      "clientId": "",
+      "projectId": "",
+      "environment": "",
+      "questionId": "",
+      "questionText": "",
+      "questionIdentifier": "",
+      "questionImage": "",
+      "isMandatory": false,
+      "mandatoryFailErrorMessage": "this question is mandatory",
+      "category": "GENERIC",
+      "tag": [],
+      "optionDetails": {
+        "value": "textarea",
+        "placeholder": "",
+        "minLength": "10",
+        "maxLength": "50",
+        "row": "5",
+        "column": "10",
+        "pattern": ""
+      },
+      "answerSecurity": {
+        "encryptionType": "",
+        "key": ""
+      },
+      "answerMasking": {
+        "isAnswerMasking": true,
+        "maskingLogic": ""
+      },
+      "correctAnswer": [],
+      "language": "US-EN",
+      "sequence": "",
+      "defaultVisiblity": true,
+      "questionLogic": [{
+        "expression": "",
+        "answerValue": "",
+        "action": "",
+        "questionid": ""
+      }]
+    },
+    "input": {
+      "clientId": "",
+      "projectId": "",
+      "environment": "",
+      "questionId": "",
+      "questionText": "",
+      "questionIdentifier": "",
+      "questionImage": "",
+      "isMandatory": false,
+      "mandatoryFailErrorMessage": "this question is mandatory",
+      "category": "GENERIC",
+      "tag": [],
+      "optionDetails": {
+        "value": "text",
+        "placeholder": "",
+        "minLength": "10",
+        "maxLength": "50",
+        "pattern": ""
+      },
+      "answerSecurity": {
+        "encryptionType": "",
+        "key": ""
+      },
+      "answerMasking": {
+        "isAnswerMasking": true,
+        "maskingLogic": ""
+      },
+      "correctAnswer": [],
+      "language": "US-EN",
+      "sequence": "",
+      "defaultVisiblity": true,
+      "questionLogic": [{
+        "expression": "",
+        "answerValue": "",
+        "action": "",
+        "questionid": ""
+      }]
+    },
+    "image": {
+      "clientId": "",
+      "projectId": "",
+      "environment": "",
+      "questionId": "",
+      "questionText": "",
+      "questionIdentifier": "",
+      "questionImage": "",
+      "isMandatory": false,
+      "mandatoryFailErrorMessage": "this question is mandatory",
+      "category": "GENERIC",
+      "tag": [],
+      "optionDetails": {
+        "value": "image",
+        "type": "MULTICHOICE",
+        "displayChoice": "VERTICAL1",
+        "randomizeOptions": false,
+        "options": [{
+          "optionId": "1",
+          "optionValue": "",
+          "image": "",
+          "score": "",
+          "isOptionCorrect": false
+        }, {
+          "optionId": "2",
+          "optionValue": "",
+          "image": "",
+          "score": "",
+          "isOptionCorrect": false
+        }],
+        "noOfStars": "5"
+      },
+      "answerSecurity": {
+        "encryptionType": "",
+        "key": ""
+      },
+      "answerMasking": {
+        "isAnswerMasking": true,
+        "maskingLogic": ""
+      },
+      "correctAnswer": [],
+      "language": "US-EN",
+      "sequence": "",
+      "defaultVisiblity": true,
+      "questionLogic": [{
+        "expression": "",
+        "answerValue": "",
+        "action": "",
+        "questionid": ""
+      }]
+    },
+    "starRating": {
+      "clientId": "",
+      "projectId": "",
+      "environment": "",
+      "questionId": "",
+      "questionText": "",
+      "questionIdentifier": "",
+      "questionImage": "",
+      "isMandatory": false,
+      "mandatoryFailErrorMessage": "this question is mandatory",
+      "category": "GENERIC",
+      "tag": [],
+      "optionDetails": {
+        "value": "starRating",
+        "noOfStars": "5"
+      },
+      "answerSecurity": {
+        "encryptionType": "",
+        "key": ""
+      },
+      "answerMasking": {
+        "isAnswerMasking": true,
+        "maskingLogic": ""
+      },
+      "correctAnswer": [],
+      "language": "US-EN",
+      "sequence": "",
+      "defaultVisiblity": true,
+      "questionLogic": [{
+        "expression": "",
+        "answerValue": "",
+        "action": "",
+        "questionid": ""
+      }]
+    },
+    "calendar": {
+      "clientId": "",
+      "projectId": "",
+      "environment": "",
+      "questionId": "",
+      "questionText": "",
+      "questionIdentifier": "",
+      "questionImage": "",
+      "isMandatory": false,
+      "mandatoryFailErrorMessage": "",
+      "category": "GENERIC",
+      "tag": [],
+      "optionDetails": {
+        "value": "calendar",
+        "format": "DD-MM-YYYY",
+        "dateRange": {
+          "option": "IN_BETWEEN",
+          "from": "",
+          "to": ""
+        },
+        "time": false
+      },
+      "answerSecurity": {
+        "encryptionType": "",
+        "key": ""
+      },
+      "answerMasking": {
+        "isAnswerMasking": true,
+        "maskingLogic": ""
+      },
+      "correctAnswer": [],
+      "language": "US-EN",
+      "sequence": "",
+      "defaultVisiblity": true,
+      "questionLogic": [{
+        "expression": "",
+        "answerValue": "",
+        "action": "",
+        "questionid": ""
+      }]
+    },
+    "file": {
+      "clientId": "",
+      "projectId": "",
+      "environment": "",
+      "questionId": "",
+      "questionText": "",
+      "questionIdentifier": "",
+      "questionImage": "",
+      "isMandatory": false,
+      "mandatoryFailErrorMessage": "this question is mandatory",
+      "category": "GENERIC",
+      "tag": [],
+      "optionDetails": {
+        "value": "file",
+        "isMulttple": false,
+        "extensions": []
+      },
+      "answerSecurity": {
+        "encryptionType": "",
+        "key": ""
+      },
+      "answerMasking": {
+        "isAnswerMasking": true,
+        "maskingLogic": ""
+      },
+      "correctAnswer": [],
+      "language": "US-EN",
+      "sequence": "",
+      "defaultVisiblity": true,
+      "questionLogic": [{
+        "expression": "",
+        "answerValue": "",
+        "action": "",
+        "questionid": ""
+      }]
+    }
+  }
+
+}
