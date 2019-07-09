@@ -2,14 +2,18 @@
   "name": "macwoac",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --prod"
   },
   "private": true,
+  "engines": {
+    "node": "10.16.0",
+    "npm": "6.9.0"
+  },
   "dependencies": {
     "@angular/animations": "~8.0.3",
     "@angular/common": "~8.0.3",
@@ -22,7 +26,12 @@
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "express": "^4.17.1",
+    "typescript": "~3.4.3",
+    "path": "^0.12.7",
+    "@angular/cli": "~8.0.6",
+    "@angular/compiler-cli": "~8.0.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.6",
@@ -43,6 +52,7 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.4.3"
+    "typescript": "~3.4.3",
+    "enhanced-resolve": "^3.3.0"
   }
 }
