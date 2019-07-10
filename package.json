@@ -31,7 +31,8 @@
     "typescript": "~3.4.3",
     "path": "^0.12.7",
     "@angular/cli": "~8.0.6",
-    "@angular/compiler-cli": "~8.0.3"
+    "@angular/compiler-cli": "~8.0.3",
+    "jsonpath": "^1.0.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.6",
