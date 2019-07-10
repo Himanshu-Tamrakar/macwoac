@@ -163,8 +163,8 @@
         "media": {
           "type": "IMAGE",
           "urls": [{
-              "value": ""
-            }]
+            "value": ""
+          }]
         }
       },
       "answerSecurity": {
@@ -427,6 +427,32 @@
         "questionid": ""
       }]
     }
-  }
+  },
+  "operators": [{
+      "functionName": "+",
+      "functionSyntax": "+",
+      "noOfOperands": "2"
+    },
+    {
+      "functionName": "-",
+      "functionSyntax": "-",
+      "noOfOperands": "2"
+    },
+    {
+      "functionName": "/",
+      "functionSyntax": "/",
+      "noOfOperands": "2"
+    },
+    {
+      "functionName": "*",
+      "functionSyntax": "*",
+      "noOfOperands": "2"
+    },
+    {
+      "functionName": "SUM",
+      "functionSyntax": "SUM(ARG.1,ARG.2,ARG.N)",
+      "noOfOperands": "N"
+    }
+  ]
 
 }

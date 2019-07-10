@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class CommonService {
   private jsonObject:any;
+  private operatorsList:any;
   constructor(private http: HttpClient) {
     this.setJsonObject();
   }
@@ -14,11 +15,16 @@ export class CommonService {
   public setJsonObject() {
     this.getAutoCompleteObject().subscribe((r) => {
         this.jsonObject = r['parsorObject'];
+        this.operatorsList = r['operators']
     })
   }
 
   getObject():any {
     return this.jsonObject;
+  }
+
+  getOperatorsList():any[] {
+    return this.operatorsList;
   }
 
   private getAutoCompleteObject(): Observable<HttpResponse<any>> {
