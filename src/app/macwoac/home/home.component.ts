@@ -1,16 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonService } from '../../shared/services/common.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  template: `
+  <div *ngIf="!isMobile; else mobile">
+    <app-desktop></app-desktop>
+  </div>
+
+  <ng-template #mobile>
+    <app-mobile></app-mobile>
+  </ng-template>
+  `
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
+  public isMobile:boolean = detectMob();
+  constructor(public _cs:CommonService) { }
+}
 
-  constructor(private _cs:CommonService) { }
-
-  ngOnInit() {
-  }
-
+/*
+To detect Mobile device or Computer device
+ */
+function detectMob() {
+   if(window.innerWidth <= 800 && window.innerHeight <= 600) {
+     return true;
+   } else {
+     return false;
+   }
 }
