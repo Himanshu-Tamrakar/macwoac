@@ -23,21 +23,13 @@ export class HomeComponent {
     this.jsonObject = this._cs.getObject();
     this.operatorsList = this._cs.getOperatorsList();
 
-    console.log(this.jsonObject, this.operatorsList)
+    // this._sc.getSubscription('DOT_LOOKUP').pipe(
+    //   debounceTime(10),
+    //   map(event => event)
+    // ).subscribe((event) => {
+    //   console.log(event);
+    // });
 
-    this._sc.getSubscription('DOT_LOOKUP').pipe(
-      debounceTime(10),
-      map(event => event)
-    ).subscribe((event) => {
-      console.log(event);
-    });
-
-    this._sc.getSubscription('SPACE_LOOKUP').pipe(
-      debounceTime(10),
-      map(event => event)
-    ).subscribe((event) => {
-      console.log(event);
-    });
   }
 }
 

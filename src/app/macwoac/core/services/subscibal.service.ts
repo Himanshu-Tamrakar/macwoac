@@ -7,6 +7,12 @@ export class SubscibalService {
   private DOT_LOOKUP = new Subject<InputValue>();
   private SPACE_LOOKUP = new Subject<InputValue>();
   private KEY_TO_APPEND = new Subject<InputValue>();
+  private SELECTED_INDEX = new Subject<number>();
+
+  private sharedObject:any = {
+    selectedIndex: 0,
+    lookupList: []
+  }
 
   constructor() { }
 
@@ -20,6 +26,9 @@ export class SubscibalService {
       }
       case 'KEY_TO_APPEND': {
         return this.KEY_TO_APPEND;
+      }
+      case 'SELECTED_INDEX': {
+        return this.SELECTED_INDEX;
       }
     }
   }
@@ -35,6 +44,19 @@ export class SubscibalService {
       case 'KEY_TO_APPEND': {
         return this.KEY_TO_APPEND.next(value);
       }
+      case 'SELECTED_INDEX': {
+        return this.SELECTED_INDEX.next(value);
+      }
     }
+  }
+
+
+  public setSharedData(obj:any) {
+    this.sharedObject = obj;
+  }
+
+
+  public getSharedData() {
+    return this.sharedObject;
   }
 }
