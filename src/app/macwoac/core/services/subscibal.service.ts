@@ -8,6 +8,7 @@ export class SubscibalService {
   private SPACE_LOOKUP = new Subject<InputValue>();
   private KEY_TO_APPEND = new Subject<InputValue>();
   private SELECTED_INDEX = new Subject<number>();
+  private RESET_LOOKUP = new Subject();
 
   private sharedObject:any = {
     selectedIndex: 0,
@@ -30,6 +31,9 @@ export class SubscibalService {
       case 'SELECTED_INDEX': {
         return this.SELECTED_INDEX;
       }
+      case 'RESET_LOOKUP': {
+        return this.RESET_LOOKUP;
+      }
     }
   }
 
@@ -46,6 +50,9 @@ export class SubscibalService {
       }
       case 'SELECTED_INDEX': {
         return this.SELECTED_INDEX.next(value);
+      }
+      case 'RESET_LOOKUP' : {
+        return this.RESET_LOOKUP.next(value)
       }
     }
   }

@@ -11,17 +11,23 @@ export class InputEventDirective {
   private selectedIndex: SelectedIndex;
 
   constructor(private _el: ElementRef, private _sc: SubscibalService) { }
-
-  @HostListener('keydown.dot', ['$event'])
-  @HostListener('keydown.space', ['$event'])
-  @HostListener('keydown.enter', ['$event'])
-  @HostListener('keydown.arrowdown', ['$event'])
-  @HostListener('keydown.arrowup', ['$event'])
-  @HostListener('keydown.backspace', ['$event'])
+  @HostListener('keydown', ['$event'])
+  // @HostListener('keydown.semicolon', ['$event'])
+  // @HostListener('keydown.dot', ['$event'])
+  // @HostListener('keydown.space', ['$event'])
+  // @HostListener('keydown.enter', ['$event'])
+  // @HostListener('keydown.arrowdown', ['$event'])
+  // @HostListener('keydown.arrowup', ['$event'])
+  // @HostListener('keydown.backspace', ['$event'])
   onInputEvent(event: KeyboardEvent) {
+    debugger
     switch (event.keyCode) {
+      case 186: {
+        console.log('semicolon');
+        this._sc.publishValue('RESET_LOOKUP', {});
+        break;
+      }
       case 32: {
-        console.log('space clicked');
         this.inputvalue = this.getValue(event.target['value'], this._el.nativeElement.selectionStart);
         this._sc.publishValue('SPACE_LOOKUP', this.inputvalue);
         break;
@@ -32,7 +38,7 @@ export class InputEventDirective {
         break;
       }
       case 13: {
-        console.log('enter clicked');
+        this._sc.publishValue('RESET_LOOKUP', {});
         this.appendToKey(event);
         break;
       }
@@ -42,6 +48,8 @@ export class InputEventDirective {
           operator: '-'
         };
         this._sc.publishValue('SELECTED_INDEX', this.selectedIndex);
+        const c = this._sc.getSharedData()['selectedIndex'];
+        this._el.nativeElement.nextSibling.firstChild.scrollTop = this._el.nativeElement.nextSibling.firstChild.scrollTop - 15;
         break;
       }
       case 40: {
@@ -50,15 +58,20 @@ export class InputEventDirective {
           operator: '+'
         };
         this._sc.publishValue('SELECTED_INDEX', this.selectedIndex);
+        const c = this._sc.getSharedData()['selectedIndex'];
+        if(c%14 == 0 && c != 0)
+        this._el.nativeElement.nextSibling.firstChild.scrollTop = this._el.nativeElement.nextSibling.firstChild.scrollTop + 285
         break;
       }
       case 8: {
-        this.inputvalue = this.getValue(event.target['value'], this._el.nativeElement.selectionStart);
-        this._sc.publishValue('DOT_LOOKUP', this.inputvalue);
+        let value =event.target['value'];
+        value = value.substring(0, value.length-1);
+        console.log(this.getValue(value, this._el.nativeElement.selectionStart-1))
         break;
       }
       default: {
-        console.log(event.keyCode)
+        let value =event.target['value'];
+        console.log(this.getValue(value, this._el.nativeElement.selectionStart))
       }
     }
   }
@@ -94,7 +107,7 @@ export class InputEventDirective {
     }, 10)
   }
 
-  setCaretPosition(ctrl, pos) {
+  private setCaretPosition(ctrl, pos) {
     if (ctrl.setSelectionRange) {
       ctrl.focus();
       ctrl.setSelectionRange(pos, pos);

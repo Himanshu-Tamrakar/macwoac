@@ -428,6 +428,6 @@
       }]
     }
   },
-  "operators": ["+", "-", "*", "/", "SUM(arg1;,arg2;)"]
+  "operators": ["+", "-", "*", "/", "SUM(arg1;,arg2;)", "SQRT(ARG;)", "ABS(ARG;)","EXPO(ARG;)", "ROUND(ARG;)", "CONCAT(ARG.1;,ARG.2;,ARG.N;)", "CONCATWITHSPACE(ARG.1;,ARG.2;,ARG.N;)", "LEFTSUBSTR(ARG.1;,no.of.characters;)", "RIGHTSUBSTR(ARG.1;,no.of.characters;)", "MIDSUBSTR(ARG;,start.index;,end.index;)", "LOWER(ARG;)", "UPPER(ARG;)", "HASH(ARG;)", "MASK(ARG;,start.index;,end.index;)", "LENGTH(ARG;)", "BASE64(ARG;)", "HEX(ARG;)", "AVG(ARG.1;,ARG.2;,ARG.N;)", "AVG($.salaries[*].amount;)", "MIN(ARG.1;,ARG.2;,ARG.N;)", "MIN($.salaries[*].amount;)", "MAX(ARG.1;,ARG.2;,ARG.N;)", "COUNT(ARG.1,ARG.2,ARG.N;)", "COUNT($.salaries[*].amount;)", "ADDDAYS(ARG;,date format;,no.of.days;,output.date.format;)", "ADDMONTHS(ARG;,date format;,no.of.months;,output.date.format;)", "ADDYEARS(ARG;,date format;,no.of.years,output.date.format;)", "SUBDAYS(ARG;,date format;,no.of.days;,output.date.format;)", "SUBMONTHS(ARG;,date format;,no.of.months;,output.date.format;)", "SUBYEARS(ARG;,date.format;,no.of.years;,output.date.format;)", "DATEDIFFDAYS(ARG.1;,date.format;,ARG.2;,date.format;)", "DATEDIFFMONTHS(ARG.1;,date.format;,ARG.2;,date.format;)", "DATEDIFFYEARS(ARG.1;,date.format;,ARG.2;,date.format;)", "DAYSDIFFFROMNOW(ARG;,date.format;)", "MONTHSDIFFFROMNOW(ARG;,date.format;)", "POW(a;,b;)", "COPY($.parentNodeName.childNodeName;)", "COPY(value;,replaceChar,replaceCharWith;)", "IFTHEN(value1;,operator;,value2;,trueValue;,falseValue;)"]
 
 }

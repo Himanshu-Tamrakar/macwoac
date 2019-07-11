@@ -45,6 +45,16 @@ export class DropDownComponent {
     });
 
 
+    this._sc.getSubscription('RESET_LOOKUP').pipe(
+      debounceTime(10),
+      map(event => event)
+    ).subscribe((event) => {
+      debugger
+      this.resetIndex();
+      this.lookup = [];
+    });
+
+
   }
 
   setSharedData(i:number, l:any[]) {
