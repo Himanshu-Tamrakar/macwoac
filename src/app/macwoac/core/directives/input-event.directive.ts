@@ -11,101 +11,123 @@ export class InputEventDirective {
   private selectedIndex: SelectedIndex;
 
   constructor(private _el: ElementRef, private _sc: SubscibalService) { }
-  @HostListener('keydown', ['$event'])
-  // @HostListener('keydown.semicolon', ['$event'])
-  // @HostListener('keydown.dot', ['$event'])
-  // @HostListener('keydown.space', ['$event'])
-  // @HostListener('keydown.enter', ['$event'])
-  // @HostListener('keydown.arrowdown', ['$event'])
-  // @HostListener('keydown.arrowup', ['$event'])
-  // @HostListener('keydown.backspace', ['$event'])
-  onInputEvent(event: KeyboardEvent) {
-    debugger
-    switch (event.keyCode) {
-      case 186: {
-        console.log('semicolon');
-        this._sc.publishValue('RESET_LOOKUP', {});
-        break;
-      }
-      case 32: {
-        this.inputvalue = this.getValue(event.target['value'], this._el.nativeElement.selectionStart);
-        this._sc.publishValue('SPACE_LOOKUP', this.inputvalue);
-        break;
-      }
+
+  private handleEvent(event:KeyboardEvent) {
+    const that = this;
+
+    switch(event.keyCode) {
       case 190: {
         this.inputvalue = this.getValue(event.target['value'], this._el.nativeElement.selectionStart);
         this._sc.publishValue('DOT_LOOKUP', this.inputvalue);
         break;
       }
-      case 13: {
-        this._sc.publishValue('RESET_LOOKUP', {});
-        this.appendToKey(event);
-        break;
-      }
       case 38: {
+        //So caret does not move to home
         event.preventDefault();
-        this.selectedIndex = {
-          operator: '-'
-        };
-        this._sc.publishValue('SELECTED_INDEX', this.selectedIndex);
-        const c = this._sc.getSharedData()['selectedIndex'];
-        this._el.nativeElement.nextSibling.firstChild.scrollTop = this._el.nativeElement.nextSibling.firstChild.scrollTop - 15;
+        this._sc.updateIndex('-');
         break;
       }
       case 40: {
+        //So caret does not move to ;ast
         event.preventDefault();
-        this.selectedIndex = {
-          operator: '+'
-        };
-        this._sc.publishValue('SELECTED_INDEX', this.selectedIndex);
-        const c = this._sc.getSharedData()['selectedIndex'];
-        if(c%14 == 0 && c != 0)
-        this._el.nativeElement.nextSibling.firstChild.scrollTop = this._el.nativeElement.nextSibling.firstChild.scrollTop + 285
+        this._sc.updateIndex('+');
         break;
-      }
-      case 8: {
-        let value =event.target['value'];
-        value = value.substring(0, value.length-1);
-        console.log(this.getValue(value, this._el.nativeElement.selectionStart-1))
-        break;
-      }
-      default: {
-        let value =event.target['value'];
-        console.log(this.getValue(value, this._el.nativeElement.selectionStart))
       }
     }
+  }
+
+  @HostListener('keydown.arrowdown', ['$event'])
+  @HostListener('keydown.arrowup', ['$event'])
+  @HostListener('keyup.dot', ['$event'])
+  onInputEvent(event: KeyboardEvent) {
+    this.handleEvent(event);
+
+
+    // switch (event.keyCode) {
+    //   case 186: {
+    //     console.log('semicolon');
+    //     this._sc.publishValue('RESET_LOOKUP', {});
+    //     break;
+    //   }
+    //   case 32: {
+    //     this.inputvalue = this.getValue(event.target['value'], this._el.nativeElement.selectionStart);
+    //     this._sc.publishValue('SPACE_LOOKUP', this.inputvalue);
+    //     break;
+    //   }
+    //   case 190: {
+    //     this.inputvalue = this.getValue(event.target['value'], this._el.nativeElement.selectionStart);
+    //     this._sc.publishValue('DOT_LOOKUP', this.inputvalue);
+    //     break;
+    //   }
+    //   case 13: {
+    //     this._sc.publishValue('RESET_LOOKUP', {});
+    //     // this.appendToKey(event);
+    //     break;
+    //   }
+    //   case 38: {
+    //     event.preventDefault();
+    //     this.selectedIndex = {
+    //       operator: '-'
+    //     };
+    //     this._sc.publishValue('SELECTED_INDEX', this.selectedIndex);
+    //     // const c = this._sc.getSharedData()['selectedIndex'];
+    //     // this._el.nativeElement.nextSibling.firstChild.scrollTop = this._el.nativeElement.nextSibling.firstChild.scrollTop - 15;
+    //     break;
+    //   }
+    //   case 40: {
+    //     event.preventDefault();
+    //     this.selectedIndex = {
+    //       operator: '+'
+    //     };
+    //     this._sc.publishValue('SELECTED_INDEX', this.selectedIndex);
+    //     // const c = this._sc.getSharedData()['selectedIndex'];
+    //     // if(c%14 == 0 && c != 0)
+    //     // this._el.nativeElement.nextSibling.firstChild.scrollTop = this._el.nativeElement.nextSibling.firstChild.scrollTop + 285
+    //     break;
+    //   }
+    //   case 8: {
+    //     let value =event.target['value'];
+    //     value = value.substring(0, value.length-1);
+    //     console.log(this.getValue(value, this._el.nativeElement.selectionStart-1))
+    //     break;
+    //   }
+    //   default: {
+    //     let value =event.target['value'];
+    //     console.log(this.getValue(value, this._el.nativeElement.selectionStart))
+    //   }
+    // }
   }
 
 
   private getValue(value: string, pos: number): InputValue {
     let obj: InputValue = {
       inputParsedValue: '#',
-      currentPosition: -1
+      caretPosition: -1
     }
-    const sub = value.substring(0, pos);
+    const sub = value.substring(0, pos-1);
     const lastIndex = sub.lastIndexOf('$');
     const actualS = sub.substring(lastIndex, pos);
 
     if (actualS.indexOf(';') == -1) {
-      obj.inputParsedValue = actualS, obj.currentPosition = pos;
+      obj.inputParsedValue = actualS, obj.caretPosition = pos;
     }
 
     return obj;
   }
 
 
-  private appendToKey(event: KeyboardEvent) {
-    let sharedData = this._sc.getSharedData();
-    let value = this._el.nativeElement.value;
-    let currentPos = this._el.nativeElement.selectionStart;
-    let firstHalf = value.slice(0, currentPos);
-    let secondHalf = value.slice(currentPos);
-    this._el.nativeElement.value = firstHalf + sharedData['lookupList'][sharedData['selectedIndex']] + secondHalf;
-    const that = this;
-    setTimeout(() => {
-      that.setCaretPosition(this._el.nativeElement, (firstHalf + sharedData['lookupList'][sharedData['selectedIndex']]).length);
-    }, 10)
-  }
+  // private appendToKey(event: KeyboardEvent) {
+  //   let sharedData = this._sc.getSharedData();
+  //   let value = this._el.nativeElement.value;
+  //   let currentPos = this._el.nativeElement.selectionStart;
+  //   let firstHalf = value.slice(0, currentPos);
+  //   let secondHalf = value.slice(currentPos);
+  //   this._el.nativeElement.value = firstHalf + sharedData['lookupList'][sharedData['selectedIndex']] + secondHalf;
+  //   const that = this;
+  //   setTimeout(() => {
+  //     that.setCaretPosition(this._el.nativeElement, (firstHalf + sharedData['lookupList'][sharedData['selectedIndex']]).length);
+  //   }, 10)
+  // }
 
   private setCaretPosition(ctrl, pos) {
     if (ctrl.setSelectionRange) {

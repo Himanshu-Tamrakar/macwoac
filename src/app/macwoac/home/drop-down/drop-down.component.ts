@@ -18,53 +18,39 @@ export class DropDownComponent {
     this.operators = this._cs.getOperatorsList();
     this.jsonPbject = this._cs.getObject();
 
-    this._sc.getSubscription('SELECTED_INDEX').subscribe((event) => {
-      if(event.operator == '+') {
-        if(this.lookup.length-1 > this.selectedIndex) this.selectedIndex++;
-      } else {
-        if(this.selectedIndex > 0) this.selectedIndex--;
-      }
-      this.setSharedData(this.selectedIndex,this.lookup);
-    });
-
+    /**
+     * [getSubscription description]
+     * @param  'SPACE_LOOKUP' [description]
+     * @return                [description]
+     */
     this._sc.getSubscription('SPACE_LOOKUP').subscribe((event) => {
-      this.resetIndex();
       this.lookup = this.operators;
-
-      this.setSharedData(0,this.lookup);
-
     });
 
+    /**
+     * [getSubscription description]
+     * @param  'DOT_LOOKUP' [description]
+     * @return              [description]
+     */
     this._sc.getSubscription('DOT_LOOKUP').pipe(
       debounceTime(10),
       map(event => this.onDotPress(event))
-    ).subscribe((event) => {
-      this.resetIndex();
-      this.setSharedData(this.selectedIndex,this.lookup);
+    ).subscribe();
 
+    /**
+     * [getSubscription help to set lookupand index value directly]
+     * @param  'SPACE_LOOKUP' [description]
+     * @return                [description]
+     */
+    this._sc.getSubscription('SET_LOOKUP_AND_INDEX').subscribe((event) => {
+      this.lookup = event.lookup; this.selectedIndex = event.index;
     });
 
-
-    this._sc.getSubscription('RESET_LOOKUP').pipe(
-      debounceTime(10),
-      map(event => event)
-    ).subscribe((event) => {
-      debugger
-      this.resetIndex();
-      this.lookup = [];
+    this._sc.getSubscription('SET_INDEX').subscribe((index) => {
+      debugger;
+      this.selectedIndex = index;
     });
 
-
-  }
-
-  setSharedData(i:number, l:any[]) {
-    const that = this;
-    setTimeout(() => {
-      that._sc.setSharedData({
-        selectedIndex: i,
-        lookupList: l
-      });
-    }, 10)
   }
 
   /**
@@ -72,30 +58,15 @@ export class DropDownComponent {
    * @param  path [description]
    * @return      [description]
    */
-  private onDotPress(path: string) {
+  private onDotPress(path: string):any {
     if (path == '' || path == undefined) {
-      this.lookup = []; //this.setSeachText(this.getSearchText('', false));
-    }
-
-    this.setLookup(this.getValueFromPath(path['inputParsedValue'], this.jsonPbject));
-  }
-
-
-  /**
-   * [setSuggestedArray set the value for suggestion array, and sets its value through service]
-   * @param  jsonPathValue [description]
-   * @return               [description]
-   */
-  private setLookup(jsonPathValue) {
-    if (typeof jsonPathValue[0] == 'string' || typeof jsonPathValue[0] == 'number' || typeof jsonPathValue[0] == 'boolean' || typeof jsonPathValue[0] == null) {
       this.lookup = [];
-    } else if (typeof jsonPathValue[0] == 'object') {
-      if (Array.isArray(jsonPathValue[0]) && jsonPathValue[0].length > 0) {
-        let tempArr = <any[]>Object.keys(jsonPathValue[0]); tempArr.unshift('*');
-        this.lookup = tempArr;
-      } else this.lookup = Object.keys(jsonPathValue[0]);
     }
-    // this.subscribalService.setSuggestedArray(<any[]>this.lookup);
+
+    this.getValueFromPath(path['inputParsedValue'], this.jsonPbject).then((r) =>{
+        debugger
+        return this.setLookup(r);
+    })
   }
 
   /**
@@ -104,16 +75,34 @@ export class DropDownComponent {
    * @param  objectValue [description]
    * @return             [description]
    */
-  private getValueFromPath(path, objectValue): any {
-    try {
-      return jp.query(objectValue, path);
-    } catch (err) {
-      return '*';
-    }
+  private getValueFromPath(path:string, objectValue:any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      try {
+         resolve(jp.query(objectValue, path));
+      } catch (err) {
+        reject('*');
+      }
+    })
   }
 
-  private resetIndex() {
-    this.selectedIndex = 0;
+  /**
+   * [setSuggestedArray set the value for suggestion array, and sets its value through service]
+   * @param  jsonPathValue [description]
+   * @return               [description]
+   */
+  private setLookup(jsonPathValue:any) {
+    if (typeof jsonPathValue[0] == 'string' || typeof jsonPathValue[0] == 'number' || typeof jsonPathValue[0] == 'boolean' || typeof jsonPathValue[0] == null) {
+      this.lookup = [];
+    } else if (typeof jsonPathValue[0] == 'object') {
+      if (Array.isArray(jsonPathValue[0]) && jsonPathValue[0].length > 0) {
+        let tempArr = <any[]>Object.keys(jsonPathValue[0]); tempArr.unshift('*');
+        this.lookup = tempArr;
+      } else this.lookup = Object.keys(jsonPathValue[0]);
+    }
+    //Just to set this calculated value to subscibal veriable
+    this._sc.setLookup(this.lookup);
   }
+
+
 
 }

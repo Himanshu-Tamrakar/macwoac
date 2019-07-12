@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { InputValue } from '../interfaces/inputvalue';
+import { InputValue, LookupAndIndex } from '../interfaces/inputvalue';
 
 @Injectable()
 export class SubscibalService {
   private DOT_LOOKUP = new Subject<InputValue>();
   private SPACE_LOOKUP = new Subject<InputValue>();
-  private KEY_TO_APPEND = new Subject<InputValue>();
-  private SELECTED_INDEX = new Subject<number>();
-  private RESET_LOOKUP = new Subject();
+  private SET_LOOKUP_AND_INDEX = new Subject<LookupAndIndex>();
+  private SET_INDEX = new Subject<number>();
+  private SET_LOOKUP = new Subject<any[]>();
 
-  private sharedObject:any = {
-    selectedIndex: 0,
-    lookupList: []
-  }
+  private lookupAndIndex:LookupAndIndex = {
+    lookup: [],
+    index: 0
+  };
 
   constructor() { }
 
@@ -25,14 +25,14 @@ export class SubscibalService {
       case 'SPACE_LOOKUP': {
         return this.SPACE_LOOKUP;
       }
-      case 'KEY_TO_APPEND': {
-        return this.KEY_TO_APPEND;
+      case 'SET_LOOKUP_AND_INDEX': {
+        return this.SET_LOOKUP_AND_INDEX;
       }
-      case 'SELECTED_INDEX': {
-        return this.SELECTED_INDEX;
+      case 'SET_INDEX': {
+        return this.SET_INDEX;
       }
-      case 'RESET_LOOKUP': {
-        return this.RESET_LOOKUP;
+      case 'SET_LOOKUP': {
+        return this.SET_LOOKUP;
       }
     }
   }
@@ -45,25 +45,53 @@ export class SubscibalService {
       case 'SPACE_LOOKUP': {
         return this.SPACE_LOOKUP.next(<InputValue>value);
       }
-      case 'KEY_TO_APPEND': {
-        return this.KEY_TO_APPEND.next(value);
+      case 'SET_LOOKUP_AND_INDEX': {
+        return this.SET_LOOKUP_AND_INDEX.next(<LookupAndIndex>value);
       }
-      case 'SELECTED_INDEX': {
-        return this.SELECTED_INDEX.next(value);
+
+      case 'SET_INDEX': {
+        return this.SET_INDEX.next(<number>value);
       }
-      case 'RESET_LOOKUP' : {
-        return this.RESET_LOOKUP.next(value)
+
+      case 'SET_LOOKUP': {
+        return this.SET_LOOKUP.next(<any[]>value);
       }
     }
   }
 
-
-  public setSharedData(obj:any) {
-    this.sharedObject = obj;
+  public setLookupAndIndex(obj:LookupAndIndex) {
+    this.lookupAndIndex = obj;
+    this.publishValue('SET_LOOKUP_AND_INDEX', this.lookupAndIndex);
   }
 
-
-  public getSharedData() {
-    return this.sharedObject;
+  public getLookupAndIndex():LookupAndIndex {
+    return this.lookupAndIndex;
   }
+
+  // public setIndex(i:number) {
+  //   this.lookupAndIndex.index = i;
+  // }
+
+  public setLookup(l:any[]) {
+    this.lookupAndIndex.lookup = l;
+  }
+
+  public getIndex() {
+    return this.lookupAndIndex.index;
+  }
+
+  public getLookup() {
+    return this.lookupAndIndex.lookup;
+  }
+
+  public updateIndex(op:string) {
+    if(op == '+') {
+      if(this.lookupAndIndex.lookup.length-1 > this.lookupAndIndex.index) ++this.lookupAndIndex.index;
+    } else if(op == '-') {
+      if(this.lookupAndIndex.index != 0) --this.lookupAndIndex.index;
+    }
+
+    this.publishValue("SET_INDEX", this.lookupAndIndex.index);
+  }
+
 }

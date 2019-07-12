@@ -1,9 +1,14 @@
 export interface InputValue {
     inputParsedValue: string;
-    currentPosition: number;
+    caretPosition: number;
 }
 
 export interface SelectedIndex {
     operator: string
     index? :number;
+}
+
+export interface LookupAndIndex {
+    lookup:any[];
+    index:number;
 }
