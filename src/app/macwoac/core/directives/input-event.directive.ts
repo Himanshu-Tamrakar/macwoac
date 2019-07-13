@@ -17,4 +17,47 @@ export class InputEventDirective {
     }
   }
 
+  private handleKeyup(event:KeyboardEvent) {
+    switch(event.keyCode) {
+      case 190: {
+        break;
+      }
+      case 13: {
+        break;
+      }
+      case 32: {
+        break;
+      }
+      case 8: {
+        break;
+      }
+      default: {
+        break;
+      }
+
+    }
+  }
+
+  @HostListener('keyup', ['$event']) onkeyup(event:KeyboardEvent) {
+    this.handleKeyup(event);
+  }
+
+  @HostListener('keydown.arrowup', ['$event'])
+  @HostListener('keydown.arrowdown', ['$event']) onKeydown(event:KeyboardEvent) {
+    this.handleKeyDown(event);
+  }
+
+  private handleKeyDown(event:KeyboardEvent) {
+    switch(event.keyCode) {
+      case 38: {
+        event.preventDefault();
+        break;
+      }
+      case 40: {
+        event.preventDefault();
+        break;
+      }
+    }
+  }
+
 }
