@@ -31,6 +31,7 @@ export class InputEventDirective {
         break;
       }
       case 32: {
+        this._sc.publishValue('SPACE', {});
         break;
       }
       case 8: {

@@ -12,7 +12,7 @@ import { LookupAndIndex, DropdwonObject } from '../../core/interfaces/inputvalue
 })
 export class DropDownComponent {
   public operators: any;
-  // public lookup:any=[];
+
   public jsonPbject: any;
   // public selectedIndex:number=0;
   // public sText:string='';
@@ -38,6 +38,17 @@ export class DropDownComponent {
 
     this._sc.getSubscription('ARROW').subscribe((sI) => {
       this._dropdwonObject.sIndex = sI;
+    })
+
+    this._sc.getSubscription('SPACE').subscribe((e) => {
+      this._dropdwonObject = <DropdwonObject>{
+        lookup: this.operators,
+        filteredLookup: this.operators,
+        sIndex: 0,
+        searchText: ''
+      }
+
+      this.setDropdownObject(this._dropdwonObject)
     })
 
   }
@@ -78,9 +89,13 @@ export class DropDownComponent {
       searchText: ''
     }
 
-    this._sc.dropdwonObject = this._dropdwonObject;
+    this.setDropdownObject(this._dropdwonObject)
+    // this._sc.dropdwonObject = this._dropdwonObject;
 
   }
 
+  setDropdownObject(obj: DropdwonObject) {
+    this._sc.dropdwonObject = obj;
+  }
 
 }
