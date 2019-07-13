@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { StaticModule } from './shared/services/static.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +12,6 @@ import { StaticModule } from './shared/services/static.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StaticModule.forRoot(),
     HttpClientModule
   ],
   providers: [],

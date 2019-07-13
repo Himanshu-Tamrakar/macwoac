@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeComponent } from '../home.component'
-import { CommonService } from '../../../shared/services/common.service';
+import { CommonService } from '../../core/services/common.service';
 import { SubscibalService } from '../../core/services/subscibal.service';
 
 @Component({

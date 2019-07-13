@@ -10,6 +10,7 @@ export class SubscibalService {
   private SPACE = new Subject<any>();
   private SEARCH = new Subject<any>();
   private UPDATE = new Subject<any>();
+  private ARROW = new Subject<any>();
 
   private _dropdwonObject: DropdwonObject = {
     lookup: [],
@@ -26,16 +27,39 @@ export class SubscibalService {
     this._dropdwonObject = object
   }
 
-  setDropdownObjectProperty(property:string, value:any) {
-    if(this._dropdwonObject.hasOwnProperty(property)) {
-      this._dropdwonObject[property]=value;
+  setDropdownObjectProperty(property: string, value: any) {
+    if (this._dropdwonObject.hasOwnProperty(property)) {
+      this._dropdwonObject[property] = value;
     }
+  }
+
+  setLookup(jsonPathValue: any) {
+    let tempLookup=[];
+    if (typeof jsonPathValue[0] == 'object') {
+      if (Array.isArray(jsonPathValue[0]) && jsonPathValue[0].length > 0) {
+        let tempArr = <any[]>Object.keys(jsonPathValue[0]); tempArr.unshift('*');
+        tempLookup = tempArr;
+        // this.selectedIndex = 0;?
+      } else {
+        // this.selectedIndex = 0;
+        tempLookup= Object.keys(jsonPathValue[0]);
+      }
+    }
+
+    this._dropdwonObject = <DropdwonObject>{
+      lookup: tempLookup,
+      filteredLookup: tempLookup,
+      sIndex: 0,
+      searchText: ''
+    }
+
+
   }
 
   constructor() { }
 
-  public getSubscription(type:string):Observable<any> {
-    switch(type) {
+  public getSubscription(type: string): Observable<any> {
+    switch (type) {
       case 'DOT': {
         return this.DOT;
       }
@@ -54,11 +78,15 @@ export class SubscibalService {
       case 'UPDATE': {
         return this.UPDATE;
       }
+      case 'ARROW' : {
+          return this.ARROW;
+      }
+
     }
   }
 
   public publishValue(type: string, value: any) {
-    switch(type) {
+    switch (type) {
       case 'DOT': {
         return this.DOT.next(value);
       }
@@ -77,18 +105,25 @@ export class SubscibalService {
       case 'UPDATE': {
         return this.UPDATE.next(value);
       }
+      case 'ARROW' : {
+          return this.ARROW.next(value);;
+      }
     }
   }
 
 
 
-  // public updateIndex(op:string) {
-  //   if(op == '+') {
-  //     if(this.lookupAndIndex.lookup.length-1 > this.lookupAndIndex.index) ++this.lookupAndIndex.index;
-  //   } else if(op == '-') {
-  //     if(this.lookupAndIndex.index != 0) --this.lookupAndIndex.index;
-  //   }
-  //   this.publishValue("SET_INDEX", this.lookupAndIndex.index);
-  // }
+  public updateIndex(op:string) {
+    if(op == '+') {
+      if(this._dropdwonObject.filteredLookup.length-1 > this._dropdwonObject.sIndex) ++this._dropdwonObject.sIndex;
+    } else if(op == '-') {
+      if(this._dropdwonObject.sIndex != 0) --this._dropdwonObject.sIndex;
+    }
+    this.publishValue("ARROW", this._dropdwonObject.sIndex);
+  }
+
+  public getClickObject() {
+    return this._dropdwonObject.filteredLookup[this._dropdwonObject.sIndex];
+  }
 
 }

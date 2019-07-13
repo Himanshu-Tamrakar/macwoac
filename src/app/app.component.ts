@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonService } from './shared/services/common.service';
+import { CommonService } from './macwoac/core/services/common.service';
 
 @Component({
   selector: 'app-root',
