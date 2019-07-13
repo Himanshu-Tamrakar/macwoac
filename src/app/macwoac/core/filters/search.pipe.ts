@@ -12,15 +12,15 @@ export class SearchPipe implements PipeTransform {
   transform(data: any, ...args: any[]): any {
     let searchText = args[0];
     if (!data) {
-      this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: [], index: 0})
+      // this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: [], index: 0})
       return [];
     }
     if (!searchText) {
-      this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: data, index: 0})
+      // this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: data, index: 0})
       return data;
     }
     if (searchText == '' || searchText == '$') {
-      this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: data, index: 0})
+      // this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: data, index: 0})
       return data;
     }
 
@@ -30,7 +30,7 @@ export class SearchPipe implements PipeTransform {
       return it.toLowerCase().includes(searchText);
     }) || [];
 
-    this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: dataA, index: 0})
+    // this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: dataA, index: 0})
     return dataA;
   }
 
