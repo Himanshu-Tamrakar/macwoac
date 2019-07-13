@@ -1,8 +1,8 @@
 <ng-content></ng-content>
 
 <div class="autocomplete-wrapper">
-  <div class="list-group autocomplete">
-    <ul>
+  <div class="list-group">
+    <ul class="autocomplete">
       <li [ngClass]="{'active': i == _dropdwonObject.sIndex}" class="list" *ngFor="let o of _dropdwonObject.lookup | search : _dropdwonObject.searchText; index as i">
         {{o}}
       </li>

@@ -6,6 +6,7 @@ ul {
   max-height: 500px;
   padding: 0;
   margin: 0;
+
 }
 
 .autocomplete-wrapper {
@@ -24,14 +25,15 @@ ul {
   width: 400px;
   max-width: 450px;
   scroll-behavior: smooth;
-}
-
-.list-group {
-  padding: 0px;
-  cursor: pointer;
-  background-color: #fff;
   border: 1px solid #d4d4d4;
 }
+
+// .list-group {
+//   padding: 0px;
+//   cursor: pointer;
+//   background-color: #fff;
+//   border: 1px solid #d4d4d4;
+// }
 
 .list
 {

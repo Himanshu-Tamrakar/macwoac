@@ -61,52 +61,43 @@ export class InputEventDirective {
       case 38: {
         event.preventDefault();
         this._sc.updateIndex('-');
-        console.log(this._el.nativeElement.nextSibling)
-        console.log(this._el.nativeElement.nextSibling.firstChild)
-        console.log(this._el.nativeElement.nextSibling.firstChild.getElementsByTagName('ul'))
-        console.log(this._el.nativeElement.nextSibling.firstChild.firstChild.getElementsByTagName('li'))
 
+        var ul = this._el.nativeElement.nextSibling.firstChild.firstChild;
+        var nodes = this._el.nativeElement.nextSibling.firstChild.firstChild.getElementsByTagName('li');
 
-
-        setTimeout(() => {this._el.nativeElement.nextSibling.firstChild.scrollTop = this._el.nativeElement.nextSibling.firstChild.scrollTop - 15;}, 100)
+        this.scroll(nodes[this._sc.dropdwonObject['sIndex']], nodes, ul)
         break;
       }
       case 40: {
         event.preventDefault();
         this._sc.updateIndex('+');
-        console.log(this._el.nativeElement.nextSibling)
-        console.log(this._el.nativeElement.nextSibling.firstChild)
-        console.log(this._el.nativeElement.nextSibling.firstChild.getElementsByTagName('ul'))
-        console.log(this._el.nativeElement.nextSibling.firstChild.firstChild.getElementsByTagName('li'))
 
-        var ul = this._el.nativeElement.nextSibling.firstChild.getElementsByTagName('ul');
+        var ul = this._el.nativeElement.nextSibling.firstChild.firstChild;
         var nodes = this._el.nativeElement.nextSibling.firstChild.firstChild.getElementsByTagName('li');
-
-        setTimeout(() => {this._el.nativeElement.nextSibling.firstChild.scrollTop = this._el.nativeElement.nextSibling.firstChild.scrollTop + 15;}, 100)
+        this.scroll(nodes[this._sc.dropdwonObject['sIndex']], nodes, ul)
         break;
       }
     }
   }
 
 
-//   private select(el) {
-//     var s = [].indexOf.call(nodes, el);
-//     if (s === -1) return;
-//
-//     selected = s;
-//
-//     var elHeight = $(el).height();
-//     var scrollTop = $(ul).scrollTop();
-//     var viewport = scrollTop + $(ul).height();
-//     var elOffset = elHeight * selected;
-//
-//     console.log('select', selected, ' viewport', viewport, ' elOffset', elOffset);
-//     if (elOffset < scrollTop || (elOffset + elHeight) > viewport)
-//         $(ul).scrollTop(elOffset);
-//
-//     document.querySelector('li.selected').classList.remove('selected');
-//     el.classList.add('selected');
-// }
+  private scroll(el, nodes, ul) {
+    var s = [].indexOf.call(nodes, el);
+    if (s === -1) return;
+
+    const selected = s;
+
+    var elHeight = el.offsetHeight;
+     // $(el).height();
+    var scrollTop = ul.scrollTop;
+    var viewport = scrollTop + ul.offsetHeight;
+    var elOffset = elHeight * selected;
+
+    console.log('select', selected, ' viewport', viewport, ' elOffset', elOffset);
+    if (elOffset < scrollTop || (elOffset + elHeight) > viewport) ul.scrollTop = elOffset
+    // document.querySelector('li.selected').classList.remove('selected');
+    // el.classList.add('selected');
+}
 
   private addKey(elem, key: string) {
     debugger
@@ -140,10 +131,5 @@ export class InputEventDirective {
       range.select();
     }
   }
-
-
-
-
-
 
 }
