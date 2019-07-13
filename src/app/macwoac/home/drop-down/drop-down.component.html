@@ -3,7 +3,7 @@
 <div class="autocomplete-wrapper">
   <div class="list-group autocomplete">
     <ul>
-      <li [ngClass]="{'active': i == selectedIndex}" class="list" *ngFor="let o of lookup; index as i">
+      <li [ngClass]="{'active': i == selectedIndex}" class="list" *ngFor="let o of lookup | search : sText; index as i">
         {{o}}
       </li>
     </ul>

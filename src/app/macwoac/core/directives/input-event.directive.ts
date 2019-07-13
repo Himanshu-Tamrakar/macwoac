@@ -2,6 +2,8 @@ import { Directive, HostListener, ElementRef, Renderer } from '@angular/core';
 import { InputValue, SelectedIndex } from "../interfaces/inputvalue";
 import * as _ from "lodash";
 import { SubscibalService } from '../services/subscibal.service';
+import { CommonService } from '../../../shared/services/common.service';
+
 
 @Directive({
   selector: '[appInputEvent]'
@@ -9,13 +11,16 @@ import { SubscibalService } from '../services/subscibal.service';
 export class InputEventDirective {
   private inputvalue: InputValue;
   private selectedIndex: SelectedIndex;
+  private jsonObject:any;
 
-  constructor(private _el: ElementRef, private _sc: SubscibalService) { }
+  constructor(private _el: ElementRef, private _sc: SubscibalService, private _cs:CommonService) {
+    this.jsonObject = {
+      '$': this._cs.getObject()
+    }
+  }
 
-  private handleEvent(event:KeyboardEvent) {
-    const that = this;
-
-    switch(event.keyCode) {
+  private handleEvent(event: KeyboardEvent) {
+    switch (event.keyCode) {
       case 190: {
         this.inputvalue = this.getValue(event.target['value'], this._el.nativeElement.selectionStart);
         this._sc.publishValue('DOT_LOOKUP', this.inputvalue);
@@ -36,9 +41,43 @@ export class InputEventDirective {
     }
   }
 
+  @HostListener('keyup', ['$event'])
+  onKeyUp(event:KeyboardEvent) {
+    console.log(event.keyCode)
+      if(event['target']['value'] == '') {
+        this._sc.publishValue('DOT_LOOKUP', {inputParsedValue: '', caretPosition: 0});
+        return;
+      }
+      const value = this.getValueFromObject(this.jsonObject, event['target']['value']);
+      const eventValue = event['target']['value'];
+
+      //On backspace clicked
+      if(event.keyCode == 8) {
+        //Last Charector is . then call jppath again::)
+        if(eventValue.charAt(eventValue.length-1) == '.') {
+        debugger
+          this.inputvalue = this.getValue(event.target['value'], this._el.nativeElement.selectionStart-1);
+          this._sc.publishValue('DOT_LOOKUP', this.inputvalue);
+          return;
+        }
+      }
+
+
+
+      const valueArr = eventValue.split('.');
+      console.log(valueArr)
+      if(value == '~') {
+        this._sc.publishValue('SEARCH_TEXT', valueArr[valueArr.length-1]);
+      } else if(typeof value == 'string' || typeof value == 'number' || typeof value == 'object' || typeof value == 'undefined') {
+        // this._sc.publishValue('DOT_LOOKUP', {inputParsedValue: event.target['value'], caretPosition: this._el.nativeElement.selectionStart});
+      }
+  }
+
+
+
   @HostListener('keydown.arrowdown', ['$event'])
   @HostListener('keydown.arrowup', ['$event'])
-  @HostListener('keyup.dot', ['$event'])
+  @HostListener('keydown.dot', ['$event'])
   onInputEvent(event: KeyboardEvent) {
     this.handleEvent(event);
 
@@ -104,7 +143,7 @@ export class InputEventDirective {
       inputParsedValue: '#',
       caretPosition: -1
     }
-    const sub = value.substring(0, pos-1);
+    const sub = value.substring(0, pos);
     const lastIndex = sub.lastIndexOf('$');
     const actualS = sub.substring(lastIndex, pos);
 
@@ -140,6 +179,11 @@ export class InputEventDirective {
       range.moveStart('character', pos);
       range.select();
     }
+  }
+
+
+  private getValueFromObject(obj:any, path:string):any {
+    return _.get(obj, path, '~');
   }
 
 }

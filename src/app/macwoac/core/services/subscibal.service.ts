@@ -9,6 +9,7 @@ export class SubscibalService {
   private SET_LOOKUP_AND_INDEX = new Subject<LookupAndIndex>();
   private SET_INDEX = new Subject<number>();
   private SET_LOOKUP = new Subject<any[]>();
+  private SEARCH_TEXT = new Subject<string>();
 
   private lookupAndIndex:LookupAndIndex = {
     lookup: [],
@@ -34,6 +35,9 @@ export class SubscibalService {
       case 'SET_LOOKUP': {
         return this.SET_LOOKUP;
       }
+      case 'SEARCH_TEXT': {
+        return this.SEARCH_TEXT;
+      }
     }
   }
 
@@ -56,21 +60,25 @@ export class SubscibalService {
       case 'SET_LOOKUP': {
         return this.SET_LOOKUP.next(<any[]>value);
       }
+
+      case 'SEARCH_TEXT': {
+        return this.SEARCH_TEXT.next(<string>value);
+      }
     }
   }
 
   public setLookupAndIndex(obj:LookupAndIndex) {
     this.lookupAndIndex = obj;
-    this.publishValue('SET_LOOKUP_AND_INDEX', this.lookupAndIndex);
+    // this.publishValue('SET_LOOKUP_AND_INDEX', this.lookupAndIndex);
   }
 
   public getLookupAndIndex():LookupAndIndex {
     return this.lookupAndIndex;
   }
 
-  // public setIndex(i:number) {
-  //   this.lookupAndIndex.index = i;
-  // }
+  public setIndex(i:number) {
+    this.lookupAndIndex.index = i;
+  }
 
   public setLookup(l:any[]) {
     this.lookupAndIndex.lookup = l;
@@ -90,7 +98,6 @@ export class SubscibalService {
     } else if(op == '-') {
       if(this.lookupAndIndex.index != 0) --this.lookupAndIndex.index;
     }
-
     this.publishValue("SET_INDEX", this.lookupAndIndex.index);
   }
 

@@ -3,6 +3,7 @@ import { SubscibalService } from '../../core/services/subscibal.service';
 import { debounceTime,map} from 'rxjs/operators';
 import { CommonService } from '../../../shared/services/common.service';
 import jp from 'jsonpath/jsonpath.min';
+import {LookupAndIndex } from '../../core/interfaces/inputvalue';
 
 @Component({
   selector: 'app-drop-down',
@@ -14,6 +15,8 @@ export class DropDownComponent {
   public lookup:any=[];
   public jsonPbject:any;
   public selectedIndex:number=0;
+  public sText:string='';
+
   constructor(public _sc:SubscibalService, private _cs:CommonService) {
     this.operators = this._cs.getOperatorsList();
     this.jsonPbject = this._cs.getObject();
@@ -35,7 +38,7 @@ export class DropDownComponent {
     this._sc.getSubscription('DOT_LOOKUP').pipe(
       debounceTime(10),
       map(event => this.onDotPress(event))
-    ).subscribe();
+    ).subscribe((e)=> {this.sText = ''});
 
     /**
      * [getSubscription help to set lookupand index value directly]
@@ -47,8 +50,11 @@ export class DropDownComponent {
     });
 
     this._sc.getSubscription('SET_INDEX').subscribe((index) => {
-      debugger;
       this.selectedIndex = index;
+    });
+
+    this._sc.getSubscription('SEARCH_TEXT').subscribe((sT) => {
+      this.sText = sT;
     });
 
   }
@@ -58,14 +64,16 @@ export class DropDownComponent {
    * @param  path [description]
    * @return      [description]
    */
-  private onDotPress(path: string):any {
-    if (path == '' || path == undefined) {
-      this.lookup = [];
+  private onDotPress(inputvalueObj: string):any {
+    if (inputvalueObj['inputParsedValue'] == '' || inputvalueObj == undefined) {
+      this.lookup = []; this.selectedIndex=0;this._sc.setLookupAndIndex({lookup: [], index: 0})
+      return;
     }
 
-    this.getValueFromPath(path['inputParsedValue'], this.jsonPbject).then((r) =>{
-        debugger
+    this.getValueFromPath(inputvalueObj['inputParsedValue'], this.jsonPbject).then((r) =>{
         return this.setLookup(r);
+    }, (err) => {
+      return;
     })
   }
 
@@ -78,7 +86,7 @@ export class DropDownComponent {
   private getValueFromPath(path:string, objectValue:any): Promise<any> {
     return new Promise((resolve, reject) => {
       try {
-         resolve(jp.query(objectValue, path));
+        resolve(jp.query(objectValue, path));
       } catch (err) {
         reject('*');
       }
@@ -93,14 +101,19 @@ export class DropDownComponent {
   private setLookup(jsonPathValue:any) {
     if (typeof jsonPathValue[0] == 'string' || typeof jsonPathValue[0] == 'number' || typeof jsonPathValue[0] == 'boolean' || typeof jsonPathValue[0] == null) {
       this.lookup = [];
+      this.selectedIndex=0;
     } else if (typeof jsonPathValue[0] == 'object') {
       if (Array.isArray(jsonPathValue[0]) && jsonPathValue[0].length > 0) {
         let tempArr = <any[]>Object.keys(jsonPathValue[0]); tempArr.unshift('*');
         this.lookup = tempArr;
-      } else this.lookup = Object.keys(jsonPathValue[0]);
+        this.selectedIndex=0;
+      } else {
+        this.selectedIndex=0;
+        this.lookup = Object.keys(jsonPathValue[0]);
+      }
     }
-    //Just to set this calculated value to subscibal veriable
-    this._sc.setLookup(this.lookup);
+
+    this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: this.lookup, index: 0})
   }
 
 
