@@ -101,21 +101,23 @@ export class InputEventDirective {
 }
 
   private addKey(elem, key: string) {
-    debugger
     let value = elem.value;
     let currentPos = elem.selectionStart;
     let firstHalf = value.slice(0, currentPos);
     let secondHalf = value.slice(currentPos);
 
-    let temp = firstHalf.split('.');
-    let l = temp[temp.length-1].length;
-    temp.pop();
-    firstHalf  = firstHalf.substring(0,firstHalf.length-l);
-    this._el.nativeElement.value = firstHalf + key + secondHalf;
+    if(firstHalf.charAt(firstHalf.length-1) == ' ') {
+      this._el.nativeElement.value = firstHalf + key + secondHalf;
+    } else {
+      let temp = firstHalf.split('.');
+      let l = temp[temp.length-1].length;
+      temp.pop();
+      firstHalf  = firstHalf.substring(0,firstHalf.length-l);
+      this._el.nativeElement.value = firstHalf + key + secondHalf;
+    }
 
-    const that = this;
     setTimeout(() => {
-      that.setCaretPosition(elem, (firstHalf + key).length);
+      this.setCaretPosition(elem, (firstHalf + key).length);
       this._sc.publishValue('DOT', '');
     }, 10)
   }
