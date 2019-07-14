@@ -21,7 +21,8 @@ export class DropDownComponent {
     lookup: [],
     filteredLookup: [],
     sIndex: 0,
-    searchText: ''
+    searchText: '',
+    isOperator: false
   };
 
   constructor(public _sc: SubscibalService, private _cs: CommonService) {
@@ -45,9 +46,9 @@ export class DropDownComponent {
         lookup: this.operators,
         filteredLookup: this.operators,
         sIndex: 0,
-        searchText: ''
+        searchText: '',
+        isOperator: true
       }
-
       this.setDropdownObject(this._dropdwonObject)
     })
 
@@ -86,7 +87,8 @@ export class DropDownComponent {
       lookup: tempLookup,
       filteredLookup: tempLookup,
       sIndex: 0,
-      searchText: ''
+      searchText: '',
+      isOperator: false
     }
 
     this.setDropdownObject(this._dropdwonObject)

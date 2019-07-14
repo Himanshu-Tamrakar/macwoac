@@ -18,4 +18,5 @@ export interface DropdwonObject {
     filteredLookup: any[];
     sIndex: number;
     searchText: string;
+    isOperator: boolean;
 }

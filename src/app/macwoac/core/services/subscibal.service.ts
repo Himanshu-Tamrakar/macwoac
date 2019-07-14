@@ -16,7 +16,8 @@ export class SubscibalService {
     lookup: [],
     filteredLookup: [],
     sIndex: 0,
-    searchText: ''
+    searchText: '',
+    isOperator: false
   }
 
   get dropdwonObject(): DropdwonObject {
@@ -33,28 +34,29 @@ export class SubscibalService {
     }
   }
 
-  setLookup(jsonPathValue: any) {
-    let tempLookup=[];
-    if (typeof jsonPathValue[0] == 'object') {
-      if (Array.isArray(jsonPathValue[0]) && jsonPathValue[0].length > 0) {
-        let tempArr = <any[]>Object.keys(jsonPathValue[0]); tempArr.unshift('*');
-        tempLookup = tempArr;
-        // this.selectedIndex = 0;?
-      } else {
-        // this.selectedIndex = 0;
-        tempLookup= Object.keys(jsonPathValue[0]);
-      }
-    }
-
-    this._dropdwonObject = <DropdwonObject>{
-      lookup: tempLookup,
-      filteredLookup: tempLookup,
-      sIndex: 0,
-      searchText: ''
-    }
-
-
-  }
+  // setLookup(jsonPathValue: any) {
+  //   let tempLookup=[];
+  //   if (typeof jsonPathValue[0] == 'object') {
+  //     if (Array.isArray(jsonPathValue[0]) && jsonPathValue[0].length > 0) {
+  //       let tempArr = <any[]>Object.keys(jsonPathValue[0]); tempArr.unshift('*');
+  //       tempLookup = tempArr;
+  //       // this.selectedIndex = 0;?
+  //     } else {
+  //       // this.selectedIndex = 0;
+  //       tempLookup= Object.keys(jsonPathValue[0]);
+  //     }
+  //   }
+  //
+  //   this._dropdwonObject = <DropdwonObject>{
+  //     lookup: tempLookup,
+  //     filteredLookup: tempLookup,
+  //     sIndex: 0,
+  //     searchText: '',
+  //     isOperator: false
+  //   }
+  //
+  //
+  // }
 
   constructor() { }
 
