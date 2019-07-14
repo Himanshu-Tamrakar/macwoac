@@ -10,29 +10,32 @@ export class SearchPipe implements PipeTransform {
   constructor(private _sc:SubscibalService){}
 
   transform(data: any, ...args: any[]): any {
-    return data;
-    // let searchText = args[0];
-    // if (!data) {
-    //   this._sc.dropdwonObject = this.setAnsGetDropdownObject([],[], 0, '');
-    //   return [];
-    // }
-    // if (!searchText) {
-    //   // this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: data, index: 0})
-    //   return data;
-    // }
-    // if (searchText == '' || searchText == '$') {
-    //   // this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: data, index: 0})
-    //   return data;
-    // }
-    //
-    // searchText = searchText.toLowerCase();
-    //
-    // let dataA = data.filter((it) => {
-    //   return it.toLowerCase().includes(searchText);
-    // }) || [];
+    // return data;
+    let searchText = args[0];
+    if (!data) {
+      debugger
+      this._sc.dropdwonObject = this.setAnsGetDropdownObject([],[], 0, '');
+      return [];
+    }
+    if (!searchText) {
+      this._sc.setDropdownObjectProperty('filteredLookup', data);
+      // this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: data, index: 0})
+      return data;
+    }
+    if (searchText == '' || searchText == '$') {
+      this._sc.setDropdownObjectProperty('filteredLookup', data);
+      // this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: data, index: 0})
+      return data;
+    }
 
+    searchText = searchText.toLowerCase();
+
+    let dataA = data.filter((it) => {
+      return it.toLowerCase().includes(searchText);
+    }) || [];
+    this._sc.setDropdownObjectProperty('filteredLookup', dataA)
     // this._sc.setLookupAndIndex(<LookupAndIndex>{lookup: dataA, index: 0})
-    // return dataA;
+    return dataA;
   }
 
   setAnsGetDropdownObject(l:any[], fL:any[], i:number, sT:string):DropdwonObject {

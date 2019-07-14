@@ -12,39 +12,44 @@ export class InputEventDirective {
   private jsonObject: any;
 
   constructor(private _el: ElementRef, private _sc: SubscibalService, private _cs: CommonService) {
-    console.log('sdsd', this._cs.getObject())
     this.jsonObject = {
       '$': this._cs.getObject()
     }
   }
 
   private handleKeyup(event: KeyboardEvent) {
-    console.log(event.keyCode)
     switch (event.keyCode) {
       case 190: {
         const path = this._cs.findPath(event['target']['value'], this._el.nativeElement.selectionStart);
         if (path != '-1') this._sc.publishValue('DOT', path);
         break;
       }
-      case 13: {
-        this.addKey(this._el.nativeElement, this._sc.getClickObject());
-        break;
-      }
       case 32: {
         this._sc.publishValue('SPACE', {});
-        break;
-      }
-      case 8: {console.log('backspace')
         break;
       }
       case 186: {
         this._sc.publishValue('DOT', '');
         break;
       }
+      case 13: {
+        this.addKey(this._el.nativeElement, this._sc.getClickObject());
+        break;
+      }
+      case 8: {
+      // if(!this._sc.dropdwonObject.isOperator) {
+      //   const path = this._cs.findPath(event['target']['value'], this._el.nativeElement.selectionStart);
+      //   if(path.charAt(path.length-1) == '.') {
+      //     this._sc.publishValue('DOT', path);
+      //   }
+      // }
+      this.findSearchText(this._el.nativeElement);
+      break;
+      }
       default: {
-        let obj = this._sc.dropdwonObject;
-        if(!obj.isOperator) console.log('search for key')
-        else console.log('search for operator')
+        if(event.keyCode != 38 && event.keyCode != 40 && event.keyCode != 39 && event.keyCode != 37) {
+            this.findSearchText(this._el.nativeElement);
+        }
         break;
       }
 
@@ -139,6 +144,25 @@ export class InputEventDirective {
       range.moveEnd('character', pos);
       range.moveStart('character', pos);
       range.select();
+    }
+  }
+
+  private findSearchText(elem) {
+    debugger
+    let value = elem.value;
+    let currentPos = elem.selectionStart;
+    let firstHalf = value.slice(0, currentPos);
+
+    if(this._sc.dropdwonObject.isOperator) {
+
+      const spacePos = firstHalf.lastIndexOf(' ');
+      firstHalf = firstHalf.substring(spacePos, currentPos);
+      this._sc.publishValue('SEARCH', firstHalf.trim());
+    } else {
+      let temp = firstHalf.split('.');
+      let l = temp[temp.length-1].length;
+
+      this._sc.publishValue('SEARCH', temp.pop());
     }
   }
 

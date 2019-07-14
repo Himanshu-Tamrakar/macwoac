@@ -39,6 +39,14 @@ export class DropDownComponent {
 
     this._sc.getSubscription('ARROW').subscribe((sI) => {
       this._dropdwonObject.sIndex = sI;
+
+    })
+
+    this._sc.getSubscription('SEARCH').subscribe((sT) => {
+      this._dropdwonObject.searchText = sT;
+      this._dropdwonObject.sIndex =0 ;
+      this._sc.setDropdownObjectProperty('searchText', sT);
+      this._sc.setDropdownObjectProperty('sIndex', 0);
     })
 
     this._sc.getSubscription('SPACE').subscribe((e) => {
