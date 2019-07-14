@@ -27,10 +27,7 @@ export class InputEventDirective {
         break;
       }
       case 13: {
-        // this.addKey(this._el.nativeElement, this._sc.getClickObject());
-        let obj = this._sc.dropdwonObject;
-        if(!obj.isOperator) this.addKey(this._el.nativeElement, this._sc.getClickObject());
-        else this.addOperatorAsKey(this._el.nativeElement, this._sc.getClickObject());
+        this.addKey(this._el.nativeElement, this._sc.getClickObject());
         break;
       }
       case 32: {
@@ -114,37 +111,22 @@ export class InputEventDirective {
     let firstHalf = value.slice(0, currentPos);
     let secondHalf = value.slice(currentPos);
 
-
-    let temp = firstHalf.split('.');
-    let l = temp[temp.length-1].length;
-    temp.pop();
-    firstHalf  = firstHalf.substring(0,firstHalf.length-l);
-    this._el.nativeElement.value = firstHalf + key + secondHalf;
-
-    setTimeout(() => {
-      this.setCaretPosition(elem, (firstHalf + key).length);
-      this._sc.publishValue('DOT', '');
-    }, 10)
-  }
-
-  private addOperatorAsKey(elem, key:string) {
-    debugger
-
-    if(!key)  return;
-    let value = elem.value;
-    let currentPos = elem.selectionStart;
-    let firstHalf = value.slice(0, currentPos);
-    let secondHalf = value.slice(currentPos);
-    const spacePos = firstHalf.lastIndexOf(' ');
-    firstHalf = firstHalf.substring(0, spacePos+1);
-
-    this._el.nativeElement.value = firstHalf + key + secondHalf;
+    if(this._sc.dropdwonObject.isOperator) {
+      const spacePos = firstHalf.lastIndexOf(' ');
+      firstHalf = firstHalf.substring(0, spacePos+1);
+      this._el.nativeElement.value = firstHalf + key + secondHalf;
+    } else {
+      let temp = firstHalf.split('.');
+      let l = temp[temp.length-1].length;
+      temp.pop();
+      firstHalf  = firstHalf.substring(0,firstHalf.length-l);
+      this._el.nativeElement.value = firstHalf + key + secondHalf;
+    }
 
     setTimeout(() => {
       this.setCaretPosition(elem, (firstHalf + key).length);
       this._sc.publishValue('DOT', '');
     }, 10)
-
   }
 
   private setCaretPosition(ctrl, pos) {
