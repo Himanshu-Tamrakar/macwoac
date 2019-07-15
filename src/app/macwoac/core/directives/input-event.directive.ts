@@ -37,12 +37,13 @@ export class InputEventDirective {
         break;
       }
       case 8: {
-      // if(!this._sc.dropdwonObject.isOperator) {
-      //   const path = this._cs.findPath(event['target']['value'], this._el.nativeElement.selectionStart);
-      //   if(path.charAt(path.length-1) == '.') {
-      //     this._sc.publishValue('DOT', path);
-      //   }
-      // }
+      if(!this._sc.dropdwonObject.isOperator) {
+        const path = this._cs.findPath(event['target']['value'], this._el.nativeElement.selectionStart);
+        if(path.charAt(path.length-1) == '.') {
+          this._sc.publishValue('DOT', path);
+          return;
+        }
+      }
       this.findSearchText(this._el.nativeElement);
       break;
       }
