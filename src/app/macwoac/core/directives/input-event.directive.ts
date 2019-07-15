@@ -18,6 +18,7 @@ export class InputEventDirective {
   }
 
   private handleKeyup(event: KeyboardEvent) {
+    alert(event.keyCode)
     switch (event.keyCode) {
       case 190: {
         const path = this._cs.findPath(event['target']['value'], this._el.nativeElement.selectionStart);
