@@ -18,7 +18,7 @@ export class InputEventDirective {
   }
 
   private handleKeyup(event: KeyboardEvent) {
-    console.log(event)
+alert(event)
     switch (event.code) {
       case 'Period': {
         const path = this._cs.findPath(event['target']['value'], this._el.nativeElement.selectionStart);
