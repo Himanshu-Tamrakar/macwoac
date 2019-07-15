@@ -18,26 +18,26 @@ export class InputEventDirective {
   }
 
   private handleKeyup(event: KeyboardEvent) {
-    alert(event.keyCode)
-    switch (event.keyCode) {
-      case 190: {
+    console.log(event)
+    switch (event.code) {
+      case 'Period': {
         const path = this._cs.findPath(event['target']['value'], this._el.nativeElement.selectionStart);
         if (path != '-1') this._sc.publishValue('DOT', path);
         break;
       }
-      case 32: {
+      case 'Space': {
         this._sc.publishValue('SPACE', {});
         break;
       }
-      case 186: {
+      case 'Semicolon': {
         this._sc.publishValue('DOT', '');
         break;
       }
-      case 13: {
+      case 'Semicolon': {
         this.addKey(this._el.nativeElement, this._sc.getClickObject());
         break;
       }
-      case 8: {
+      case 'Backspace': {
       if(!this._sc.dropdwonObject.isOperator) {
         const path = this._cs.findPath(event['target']['value'], this._el.nativeElement.selectionStart);
         if(path.charAt(path.length-1) == '.') {
