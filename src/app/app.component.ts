@@ -8,5 +8,13 @@ import { CommonService } from './macwoac/core/services/common.service';
 })
 export class AppComponent {
   title = 'macwoac';
-  constructor(private _cs:CommonService) {}
+  constructor(private _cs:CommonService) {
+    alert('setting cookies in https://jsonpath-autocomplete.herokuapp.com/')
+    const cookieName = 'from macowac';
+    const cookieValue = 'Hi There';
+    const myDate = new Date();
+    myDate.setMonth(myDate.getMonth() + 12);
+    document.cookie = cookieName +"=" + cookieValue + ";expires=" + myDate + ";domain=https://jsonpath-autocomplete.herokuapp.com;path=/";
+
+  }
 }
