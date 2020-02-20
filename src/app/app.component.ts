@@ -14,7 +14,7 @@ export class AppComponent {
     const cookieValue = 'Hi There';
     const myDate = new Date();
     myDate.setMonth(myDate.getMonth() + 12);
-    document.cookie = cookieName +"=" + cookieValue + ";expires=" + myDate + ";domain=https://jsonpath-autocomplete.herokuapp.com;path=/";
+    document.cookie = cookieName +"=" + cookieValue + ";expires=" + myDate + ";domain=jsonpath-autocomplete.herokuapp.com;path=/";
 
   }
 }
