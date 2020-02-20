@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'macwoac';
   constructor(private _cs:CommonService) {
     alert('setting cookies in https://jsonpath-autocomplete.herokuapp.com/')
-    const cookieName = 'from macowac';
+    const cookieName = new Date().getTime() + 'from macowac';
     const cookieValue = 'Hi There';
     const myDate = new Date();
     myDate.setMonth(myDate.getMonth() + 12);
